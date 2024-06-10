@@ -3,6 +3,7 @@ SIZE=10;
 >
 INC(1);
 INC(0);
+ADD(1,0,2);
 SIF(0,EQL,1);
 OUT(THEY EQUAL!);
 <

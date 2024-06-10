@@ -60,7 +60,7 @@ public class NavaCompiler{
     }
 
     public static void main(String[] args){
-        File folder = new File("src/NAVA/");
+        File folder = new File("./NAVA/");
         File[] files = folder.listFiles();
         try{
             for(File file : files){
