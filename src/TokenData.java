@@ -1,3 +1,4 @@
+package src;
 public class TokenData
 {
     private boolean error = false;

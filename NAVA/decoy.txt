@@ -1,5 +1,0 @@
-SIZE=10;
-
->
-OUT(I AM A DECOY);
-<
