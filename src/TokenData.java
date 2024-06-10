@@ -31,4 +31,8 @@ public class TokenData
     public void setCommandValue(String newCV){this.commandValue2 = newCV; this.isString = true;}
     public void setCommandOutputAddress(int newCOA){this.commandOutputAddress = newCOA;}
     public void setError(int errorType){this.errorType = errorType; this.error = true;}
+
+    public String toString(){
+        return "Command Token: " + this.commandToken + "\nCommand Address: " + this.commandAddress + "\nCommand Value: " + this.commandValue + "\nCommand Value 2: " + this.commandValue2 + "\nCommand Output Address: " + this.commandOutputAddress + "\nError: " + this.error + "\nError Type: " + this.errorType;
+    }
 }

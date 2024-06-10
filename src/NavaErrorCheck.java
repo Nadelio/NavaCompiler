@@ -36,7 +36,7 @@ public class NavaErrorCheck {
                 int secondIndex = line.indexOf(",", firstIndex+1);
                 td.setCommandAddress(Integer.parseInt(line.substring(4, firstIndex)));
                 td.setCommandValue(line.substring(firstIndex+1, secondIndex));
-                td.setCommandOutputAddress(Integer.parseInt(line.substring(secondIndex+1, line.indexOf(")"))));
+                td.setCommandValue((Integer.parseInt(line.substring(secondIndex+1, line.indexOf(")")))));
                 if(!Arrays.asList(NavaCompiler.cmps).contains(td.getCommandValue2())){
                     td.setError(3); // Comparison Syntax Error
                 }

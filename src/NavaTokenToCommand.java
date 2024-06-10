@@ -36,40 +36,57 @@ public class NavaTokenToCommand
             NavaCompiler.compilerVariables[td.getCommandOutputAddress()] = NavaCompiler.compilerVariables[td.getCommandAddress()] / NavaCompiler.compilerVariables[td.getCommandValue()];
         } else if(td.getCommandToken().equals("SIF")){
             String commandValue2 = td.getCommandValue2();
-
             if ("NEQL".equals(commandValue2)) {
-                if(td.getCommandAddress() != td.getCommandValue()){
-                    try{run(NavaErrorCheck.checkLine(NavaCompiler.getBR().readLine()));}catch(Exception e){e.printStackTrace();} // run line
+                if(NavaCompiler.compilerVariables[td.getCommandAddress()] != td.getCommandValue()){
+                    try{
+                        String line = NavaCompiler.getBR().readLine();
+                        run(NavaErrorCheck.checkLine(line));
+                    }catch(Exception e){e.printStackTrace();} // run line
                 } else {
                     try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
                 }
             } else if ("GRTEQL".equals(commandValue2)) {
-                if(td.getCommandAddress() >= td.getCommandValue()){
-                    try{run(NavaErrorCheck.checkLine(NavaCompiler.getBR().readLine()));}catch(Exception e){e.printStackTrace();}
+                if(NavaCompiler.compilerVariables[td.getCommandAddress()] >= td.getCommandValue()){
+                    try{
+                        String line = NavaCompiler.getBR().readLine();
+                        run(NavaErrorCheck.checkLine(line));
+                    }catch(Exception e){e.printStackTrace();}
                 } else {
                     try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
                 }
             } else if ("LESEQL".equals(commandValue2)) {
-                if(td.getCommandAddress() <= td.getCommandValue()){
-                    try{run(NavaErrorCheck.checkLine(NavaCompiler.getBR().readLine()));}catch(Exception e){e.printStackTrace();}
+                if(NavaCompiler.compilerVariables[td.getCommandAddress()] <= td.getCommandValue()){
+                    try{
+                        String line = NavaCompiler.getBR().readLine();
+                        run(NavaErrorCheck.checkLine(line));
+                    }catch(Exception e){e.printStackTrace();}
                 } else {
                     try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
                 }
             } else if ("EQL".equals(commandValue2)) {
-                if(td.getCommandAddress() == td.getCommandValue()){
-                    try{run(NavaErrorCheck.checkLine(NavaCompiler.getBR().readLine()));}catch(Exception e){e.printStackTrace();}
+                if(NavaCompiler.compilerVariables[td.getCommandAddress()] == td.getCommandValue()){
+                    try{
+                        String line = NavaCompiler.getBR().readLine();
+                        run(NavaErrorCheck.checkLine(line));
+                    }catch(Exception e){e.printStackTrace();}
                 } else {
                     try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
                 }
             } else if ("GRT".equals(commandValue2)) {
-                if(td.getCommandAddress() > td.getCommandValue()){
-                    try{run(NavaErrorCheck.checkLine(NavaCompiler.getBR().readLine()));}catch(Exception e){e.printStackTrace();}
+                if(NavaCompiler.compilerVariables[td.getCommandAddress()] > td.getCommandValue()){
+                    try{
+                        String line = NavaCompiler.getBR().readLine();
+                        run(NavaErrorCheck.checkLine(line));
+                    }catch(Exception e){e.printStackTrace();}
                 } else {
                     try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
                 }
             } else if ("LES".equals(commandValue2)) {
-                if(td.getCommandAddress() < td.getCommandValue()){
-                    try{run(NavaErrorCheck.checkLine(NavaCompiler.getBR().readLine()));}catch(Exception e){e.printStackTrace();}
+                if(NavaCompiler.compilerVariables[td.getCommandAddress()] < td.getCommandValue()){
+                    try{
+                        String line = NavaCompiler.getBR().readLine();
+                        run(NavaErrorCheck.checkLine(line));
+                    }catch(Exception e){e.printStackTrace();}
                 } else {
                     try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
                 }

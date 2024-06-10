@@ -1,0 +1,11 @@
+SIZE=10;
+
+>
+INC(1);
+OUT(0);
+OUT(1);
+SIF(0,NEQL,1);
+OUT(THEY ARE NOT EQUAL!);
+ADD(0,1,2);
+OUT(2);
+<
