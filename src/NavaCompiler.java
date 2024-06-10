@@ -63,7 +63,7 @@ public class NavaCompiler{
         File[] files = folder.listFiles();
         try{
             for(File file : files){
-                if(file.isFile() && file.getName().contains(".nava")){
+                if(file.isFile() && file.getName().endsWith(".nava")){
                     fr = new FileReader(file);
                     compile();
                     fr.close();
