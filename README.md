@@ -52,9 +52,8 @@ Following the *variable number declaration*, or `VNB` for short, will be your pr
 Following that declaration, can be any number of commands, as long as your hardware can handle it.\
 When you want to signal the end to the program you will write a `<`.\
 This tells the compiler that you are ending your program body, and anything that follows it needs to be whitespace or it will through an error.\
-Comments are not supported in Nava.\
+Comments have to come after a `;` and can only be in the program body.\
 Doubles, Floats, Arrays, Loops, Conditionals, and other features of Assembly are not supported yet inside of Nava.\
-I do plan on adding comment support soon.
 # 
 Here is a "Hello World" script in Nava:
 ```
