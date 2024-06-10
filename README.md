@@ -33,6 +33,17 @@ You have 5 commands, `INC`, `DEC`, `MOV`, `SET`, and `OUT`.
 - `MOV` moves the value of the first address to the second address, and sets the first address to `0`
 - `SET` sets the address (the first number), to the second number
 - `OUT` outputs what is in the middle of the parenthesis
+- `ADD` stores the sum of the values of the first and second address into the third address
+- `SUB` stores the difference of the values of the first and second address into the third address, throws a negative number error if the difference is negative
+- `MUL` stores the product of the values of the first and second address into the third address
+- `DIV` stores the whole number quotient of the values of the first and second address into the third address
+- `SIF` compares the values of the first and second address using the comparison arguement given, if it results as `true`, it will run the next line, otherwise, it will skip the next line
+    - `EQL` -> `==`
+    - `NEQL` -> `!=`
+    - `GRT` -> `>`
+    - `LES` -> `<`
+    - `GRTEQL` -> `>=`
+    - `LESEQL` -> `<=`
 
 The basic structure of commands looks like:\
 `cmd`(`value`,`value2`);\
@@ -53,7 +64,7 @@ Following that declaration, can be any number of commands, as long as your hardw
 When you want to signal the end to the program you will write a `<`.\
 This tells the compiler that you are ending your program body, and anything that follows it needs to be whitespace or it will through an error.\
 Comments have to come after a `;` and can only be in the program body.\
-Doubles, Floats, Arrays, Loops, Conditionals, and other features of Assembly are not supported yet inside of Nava.\
+Doubles, Floats, Arrays, Loops, and certain features of Assembly are not supported yet inside of Nava.\
 # 
 Here is a "Hello World" script in Nava:
 ```
