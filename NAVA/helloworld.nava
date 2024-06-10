@@ -1,0 +1,5 @@
+SIZE=1;
+
+>
+OUT(HELLO WORLD);
+<

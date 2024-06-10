@@ -1,0 +1,5 @@
+SIZE=10;
+
+>
+OUT(THIS IS A PROGRAM TEST);
+<
