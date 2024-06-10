@@ -7,6 +7,7 @@ public class TokenData
     private int commandAddress;
     private int commandValue;
     private String commandValue2;
+    private int commandOutputAddress;
     private boolean isString;
     
     public TokenData(String token, int address, int value){
@@ -22,10 +23,12 @@ public class TokenData
     public int getCommandAddress(){return this.commandAddress;}
     public int getCommandValue(){return this.commandValue;}
     public String getCommandValue2(){return this.commandValue2;}
+    public int getCommandOutputAddress(){return this.commandOutputAddress;}
     public boolean isString(){return this.isString;}
 
     public void setCommandAddress(int newCA){this.commandAddress = newCA;}
     public void setCommandValue(int newCV){this.commandValue = newCV;}
     public void setCommandValue(String newCV){this.commandValue2 = newCV; this.isString = true;}
+    public void setCommandOutputAddress(int newCOA){this.commandOutputAddress = newCOA;}
     public void setError(int errorType){this.errorType = errorType; this.error = true;}
 }

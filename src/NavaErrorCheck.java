@@ -6,11 +6,11 @@ public class NavaErrorCheck {
         String[] commands = NavaCompiler.cmds;
 
         if(!Arrays.asList(commands).contains(line.substring(0,3))){
-            TokenData errorToken1 = new TokenData(line.substring(0, 3), -1, -1); // unknown command error
+            TokenData errorToken1 = new TokenData(line.substring(0, 3), -1, -1); // Unknown Command error
             errorToken1.setError(0);
             return errorToken1;
         } else if(line.contains("-")) {
-            TokenData errorToken2 = new TokenData(line, -1, -1); // negative number error
+            TokenData errorToken2 = new TokenData(line, -1, -1); // Negative Number error
             errorToken2.setError(1);
             return errorToken2;
         } else {
@@ -25,6 +25,21 @@ public class NavaErrorCheck {
                 } catch(NumberFormatException e){
                     td.setCommandValue(value);
                 }   
+            } else if(td.getCommandToken().equals("DIV")||td.getCommandToken().equals("MUL")||td.getCommandToken().equals("ADD")||td.getCommandToken().equals("SUB")){
+                int firstIndex = line.indexOf(",");
+                int secondIndex = line.indexOf(",", firstIndex+1);
+                td.setCommandAddress(Integer.parseInt(line.substring(4, firstIndex)));
+                td.setCommandValue(Integer.parseInt(line.substring(firstIndex+1, secondIndex)));
+                td.setCommandOutputAddress(Integer.parseInt(line.substring(secondIndex+1, line.indexOf(")"))));
+            } else if(td.getCommandToken().equals("SIF")) {
+                int firstIndex = line.indexOf(",");
+                int secondIndex = line.indexOf(",", firstIndex+1);
+                td.setCommandAddress(Integer.parseInt(line.substring(4, firstIndex)));
+                td.setCommandValue(line.substring(firstIndex+1, secondIndex));
+                td.setCommandOutputAddress(Integer.parseInt(line.substring(secondIndex+1, line.indexOf(")"))));
+                if(!Arrays.asList(NavaCompiler.cmps).contains(td.getCommandValue2())){
+                    td.setError(3); // Comparison Syntax Error
+                }
             } else {
                 td.setCommandAddress(Integer.parseInt(line.substring(4, line.indexOf(")"))));
             }

@@ -12,6 +12,7 @@ public class NavaCompiler{
                                                                              // set index to value,
                                                                              // output index
     private static final String[] errorTypes = {"UnknownCommandError", "NegativeNumberError", "UnusedError", "IncorrectSyntaxError"};
+    public static final String[] cmps = {"EQL", "NEQL", "GRT", "LES", "GRTEQL", "LESEQL"};
     private static FileReader fr = null;
     public static int[] compilerVariables;
     private static BufferedReader reader;
@@ -59,7 +60,7 @@ public class NavaCompiler{
     }
 
     public static void main(String[] args){
-        File folder = new File("./NAVA/");
+        File folder = new File("src/NAVA/");
         File[] files = folder.listFiles();
         try{
             for(File file : files){
