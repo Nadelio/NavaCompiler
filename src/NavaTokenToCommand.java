@@ -71,9 +71,7 @@ public class NavaTokenToCommand
                     throw new Exception("Line: " + NavaCompiler.lineNumber +
                                         ", Program Started On Line: " + NavaCompiler.programStartLine + " has an incorrect or unknown comparison!\n" +
                                         "Error type: " + NavaCompiler.getErrorTypes()[3]);
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+                }catch(Exception e){e.printStackTrace();}
             }
         } else {
             try{
