@@ -7,7 +7,7 @@
 4. Begin programming!
 
 ### Running the compiler:
-1. Double check that you have the *Java Runtime Environment* downloaded and add to your `PATH` (if you do not know what this is, look up a tutorial to add JRE to your PATH)
+1. Double check that you have the *Java Runtime Environment* downloaded and added to your `PATH` (if you do not know what this is, look up a tutorial to add JRE to your PATH)
 2. Open terminal
 3. Change your directory to the folder with the NavaCompiler.jar file (using `cd <pathname>`)
 4. Run the command `java -jar --enable-preview NavaCompiler.jar`
