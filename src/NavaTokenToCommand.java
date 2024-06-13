@@ -25,9 +25,10 @@ public class NavaTokenToCommand
             NavaCompiler.compilerVariables[td.getCommandOutputAddress()] = NavaCompiler.compilerVariables[td.getCommandAddress()] - NavaCompiler.compilerVariables[td.getCommandValue()];
             if(NavaCompiler.compilerVariables[td.getCommandOutputAddress()] < 0){
                 td.setError(1);
-                try{throw new Exception("Line: " + NavaCompiler.lineNumber +
+                try{
+                    throw new Exception("Line: " + NavaCompiler.lineNumber +
                                         ", Program Started On Line: " + NavaCompiler.programStartLine + " has an incorrect or unknown command!\n" + 
-                                        "Error type: " + NavaCompiler.getErrorTypes()[td.getErrorType()]);
+                                        "Error type: " + NavaCompiler.getErrorTypes()[1]);
                 }catch(Exception e) {e.printStackTrace();}
             }
         } else if(td.getCommandToken().equals("MUL")){
@@ -93,15 +94,15 @@ public class NavaTokenToCommand
             } else {
                 try{
                     throw new Exception("Line: " + NavaCompiler.lineNumber +
-                                        ", Program Started On Line: " + NavaCompiler.programStartLine + " has an incorrect or unknown comparison!\n" +
+                                        ", Program Started On Line: " + NavaCompiler.programStartLine + " has an incorrect or unknown comparison.\n" +
                                         "Error type: " + NavaCompiler.getErrorTypes()[3]);
                 }catch(Exception e){e.printStackTrace();}
             }
         } else {
             try{
                 throw new Exception("Line: " + NavaCompiler.lineNumber +
-                                            ", Program Started On Line: " + NavaCompiler.programStartLine + " has an incorrect or unknown comparison!\n" +
-                                            "Error type: " + NavaCompiler.getErrorTypes()[td.getErrorType()]);
+                                            ", Program Started On Line: " + NavaCompiler.programStartLine + " has an incorrect or unknown command.\n" +
+                                            "Error type: " + NavaCompiler.getErrorTypes()[0]);
             }catch(Exception e){e.printStackTrace();}
         }
     }    
