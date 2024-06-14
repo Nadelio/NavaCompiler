@@ -10,7 +10,7 @@ public class NavaErrorCheck {
             errorToken1.setError(0);
             return errorToken1;
         } else if(line.contains("-")) {
-            TokenData errorToken2 = new TokenData(line, -1, -1); // Negative Number error
+            TokenData errorToken2 = new TokenData(line, -1, -1); // Negative Index error
             errorToken2.setError(1);
             return errorToken2;
         } else {
@@ -40,7 +40,8 @@ public class NavaErrorCheck {
                 if(!Arrays.asList(NavaCompiler.cmps).contains(td.getCommandValue2())){
                     td.setError(3); // Comparison Syntax Error
                 }
-            } else {
+            } //else if(td.getCommandToken().equals("FUN")) {} 
+            else {
                 td.setCommandAddress(Integer.parseInt(line.substring(4, line.indexOf(")"))));
             }
             return td;

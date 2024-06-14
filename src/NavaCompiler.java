@@ -3,35 +3,68 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class NavaCompiler{
 
     public static final String[] cmds = {"DEC", "INC", "MOV", "SET", "OUT", "ADD", "SUB", "MUL", "DIV", "SIF"};
-    private static final String[] errorTypes = {"UnknownCommandError", "NegativeNumberError", "UnusedError", "IncorrectSyntaxError"};
+    private static final String[] errorTypes = {"UnknownCommandError", "NegativeIndexError", "IncompleteFunctionError", "IncorrectSyntaxError"};
     public static final String[] cmps = {"EQL", "NEQL", "GRT", "LES", "GRTEQL", "LESEQL"};
     private static FileReader fr = null;
-    public static int[] compilerVariables;
+    public static int[] compilerIntVariables;
     private static BufferedReader reader;
     public static int programStartLine;
     public static int lineNumber;
-
+    public static HashMap<String, NavaFunction> functions = new HashMap<String, NavaFunction>();
 
     public static void compile(){
         try{
             reader = new BufferedReader(fr);
             String line = reader.readLine();
+            lineNumber = 1;
             if(!line.substring(0,5).equals("SIZE=")){
                 throw new Exception("Line: " + 0 + ", Program Started On Line: N/A has incorrect syntax!\n" + "Error type: " + errorTypes[3]);
             } else {
+
                 int compilerVariablesSize = Integer.parseInt(line.substring(5, line.indexOf(";")));
                 if(compilerVariablesSize <= 0){
                     throw new Exception("Line: " + 0 + ", Program Started On Line: N/A has incorrect syntax!\n" + "Error type: " + errorTypes[1]);
                 }
-                compilerVariables = new int[compilerVariablesSize];
+                compilerIntVariables = new int[compilerVariablesSize];
             }
-            lineNumber = 1;
 
             boolean inProgramBody = false;
+            boolean inFunctionBody = false;
+            String functionName = "";
+            TokenData[] commands = new TokenData[0];
+
+            while(line != null && !line.equals(">")){
+                functionName = "";
+                commands = new TokenData[0];
+                while(!line.equals("]")){
+                    line = reader.readLine();
+                    lineNumber++;
+                    if(line.contains("[") && (line.length() - 1 ==  line.indexOf("[")) && !inFunctionBody){
+                        functionName = line.substring(0, line.indexOf("["));
+                        inFunctionBody = true;
+                    } else if(inFunctionBody){
+                        if(line.equals("]")){
+                            functions.put(functionName, new NavaFunction(commands, functionName));
+                            inFunctionBody = false;
+                            break;
+                        } else if(inFunctionBody && !line.equals("]")){
+                            TokenData td = NavaErrorCheck.checkLine(line);
+                            commands = ArrayUtils.add(commands, td);
+                        }
+                    } else if(!line.equals("")){
+                        if(line.equals(">")){break;}
+                        throw new Exception("Line: " + lineNumber + ", Program Started On Line: N/A" + " has an incomplete function declaration statement.\n" + "Error type: " + errorTypes[2]);
+                    }
+                }
+                if(line.equals(">")){break;}
+                line = reader.readLine();
+                lineNumber++;
+            }
 
             while(line != null){
                 if(line.equals(">")){
@@ -56,7 +89,7 @@ public class NavaCompiler{
     }
 
     public static void main(String[] args){
-        File folder = new File("./NAVA/");
+        File folder = new File("src/NAVA/");
         File[] files = folder.listFiles();
         try{
             for(File file : files){

@@ -1,5 +1,13 @@
 SIZE=10;
 
+INCREASE[
+INC(1);
+]
+
+DECREASE[
+DEC(1);
+]
+
 >
 INC(1);
 OUT(0);
