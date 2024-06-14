@@ -1,7 +1,7 @@
 package src;
 import java.util.Arrays;
 
-public class NavaErrorCheck {
+public class NavaParser {
     public static TokenData checkLine(String line){
         String[] commands = NavaCompiler.cmds;
 
@@ -40,8 +40,9 @@ public class NavaErrorCheck {
                 if(!Arrays.asList(NavaCompiler.cmps).contains(td.getCommandValue2())){
                     td.setError(3); // Comparison Syntax Error
                 }
-            } //else if(td.getCommandToken().equals("FUN")) {} 
-            else {
+            } else if(td.getCommandToken().equals("FUN")) {
+                td.setCommandValue(line.substring(3, line.indexOf(")")));
+            } else {
                 td.setCommandAddress(Integer.parseInt(line.substring(4, line.indexOf(")"))));
             }
             return td;

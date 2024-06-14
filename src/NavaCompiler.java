@@ -53,7 +53,7 @@ public class NavaCompiler{
                             inFunctionBody = false;
                             break;
                         } else if(inFunctionBody && !line.equals("]")){
-                            TokenData td = NavaErrorCheck.checkLine(line);
+                            TokenData td = NavaParser.checkLine(line);
                             commands = ArrayUtils.add(commands, td);
                         }
                     } else if(!line.equals("")){
@@ -75,11 +75,11 @@ public class NavaCompiler{
                 } else if(line.equals("<")){
                     inProgramBody = false;
                 } else if(inProgramBody){
-                    TokenData td = NavaErrorCheck.checkLine(line);
+                    TokenData td = NavaParser.checkLine(line);
                     if(td.getErrorStatus()){
                         throw new Exception("Line: " + lineNumber + ", Program Started On Line: " + programStartLine + " has an incorrect or unknown command!\n" + "Error type: " + errorTypes[td.getErrorType()]);
                     }
-                    NavaTokenToCommand.run(td);
+                    NavaRunner.run(td);
                 }
 
                 line = reader.readLine();
