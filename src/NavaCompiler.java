@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class NavaCompiler{
 
-    public static final String[] cmds = {"DEC", "INC", "MOV", "SET", "OUT", "ADD", "SUB", "MUL", "DIV", "SIF"};
+    public static final String[] cmds = {"DEC", "INC", "MOV", "SET", "OUT", "ADD", "SUB", "MUL", "DIV", "SIF", "FUN"};
     private static final String[] errorTypes = {"UnknownCommandError", "NegativeIndexError", "IncompleteFunctionError", "IncorrectSyntaxError"};
     public static final String[] cmps = {"EQL", "NEQL", "GRT", "LES", "GRTEQL", "LESEQL"};
     private static FileReader fr = null;
@@ -89,7 +89,7 @@ public class NavaCompiler{
     }
 
     public static void main(String[] args){
-        File folder = new File("./NAVA/");
+        File folder = new File("src/NAVA/");
         File[] files = folder.listFiles();
         try{
             for(File file : files){

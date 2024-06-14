@@ -41,7 +41,7 @@ public class NavaParser {
                     td.setError(3); // Comparison Syntax Error
                 }
             } else if(td.getCommandToken().equals("FUN")) {
-                td.setCommandValue(line.substring(3, line.indexOf(")")));
+                td.setCommandValue(line.substring(4, line.indexOf(")")));
             } else {
                 td.setCommandAddress(Integer.parseInt(line.substring(4, line.indexOf(")"))));
             }
