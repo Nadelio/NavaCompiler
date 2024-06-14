@@ -9,6 +9,7 @@ public class TokenData
     private String commandValue2;
     private int commandOutputAddress;
     private boolean isString;
+    private boolean hasIndex = false;
     
     public TokenData(String token, int address, int value){
         this.commandToken = token;
@@ -25,12 +26,14 @@ public class TokenData
     public String getCommandValue2(){return this.commandValue2;}
     public int getCommandOutputAddress(){return this.commandOutputAddress;}
     public boolean isString(){return this.isString;}
+    public boolean hasIndex(){return this.hasIndex;}
 
     public void setCommandAddress(int newCA){this.commandAddress = newCA;}
     public void setCommandValue(int newCV){this.commandValue = newCV;}
     public void setCommandValue(String newCV){this.commandValue2 = newCV; this.isString = true;}
     public void setCommandOutputAddress(int newCOA){this.commandOutputAddress = newCOA;}
     public void setError(int errorType){this.errorType = errorType; this.error = true;}
+    public void setIndex(boolean newIndex){this.hasIndex = newIndex;}
 
     public String toString(){
         return "Command Token: " + this.commandToken + "\nCommand Address: " + this.commandAddress + "\nCommand Value: " + this.commandValue + "\nCommand Value 2: " + this.commandValue2 + "\nCommand Output Address: " + this.commandOutputAddress + "\nError: " + this.error + "\nError Type: " + this.errorType;

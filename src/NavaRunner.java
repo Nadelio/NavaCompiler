@@ -70,8 +70,8 @@ public class NavaRunner
             if(IntVariables[commandAddress] != commandValue1){
                 try{
                     String line = NavaCompiler.getBR().readLine();
-                    run(NavaParser.checkLine(line));
-                }catch(Exception e){e.printStackTrace();} // run line
+                    run(NavaParser.checkLine(line)); // run line
+                }catch(Exception e){e.printStackTrace();}
             } else {
                 try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
             }
@@ -141,3 +141,24 @@ public class NavaRunner
         return td;
     }
 }
+/*
+So two versions:
+--------------------------------------------
+RPT(n);
+INC(0); adds 1 to address [0] n times
+--------------------------------------------
+RPT(n,INC);
+INC(i); adds 1 to addresses [0], [1], [2], ..., [n]
+--------------------------------------------
+for(int i = 0; i <= n; i++){
+    IntVariables[0]++;
+}
+--------------------------------------------
+for(int i = 0; i <= n; i++){
+    IntVariables[i]++;
+}
+--------------------------------------------
+for(int i = n; i >= 0; i--){
+    IntVariables[i]++;
+}
+ */

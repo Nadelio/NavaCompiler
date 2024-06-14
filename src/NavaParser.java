@@ -24,7 +24,17 @@ public class NavaParser {
                     td.setCommandAddress(Integer.parseInt(value));
                 } catch(NumberFormatException e){
                     td.setCommandValue(value);
-                }   
+                }
+            } else if (td.getCommandToken().equals("RPT")){
+                int firstIndex = line.indexOf(",");
+                if(firstIndex == -1){
+                    td.setIndex(false);
+                    td.setCommandValue(Integer.parseInt(line.substring(4, line.indexOf(")"))));
+                } else {
+                    td.setIndex(true);
+                    td.setCommandValue(Integer.parseInt(line.substring(4,firstIndex)));
+                    td.setCommandValue(line.substring(firstIndex+1, line.indexOf(")")));
+                }
             } else if(td.getCommandToken().equals("DIV")||td.getCommandToken().equals("MUL")||td.getCommandToken().equals("ADD")||td.getCommandToken().equals("SUB")){
                 int firstIndex = line.indexOf(",");
                 int secondIndex = line.indexOf(",", firstIndex+1);
@@ -49,24 +59,3 @@ public class NavaParser {
         }
     }
 }
-/*
-So two versions:
---------------------------------------------
-RPT(n);
-INC(0); adds 1 to address [0] n times
---------------------------------------------
-RPT(n,INC,i);
-INC(i); adds 1 to addresses [0], [1], [2], ..., [n]
---------------------------------------------
-for(int i = 0; i < n; i++){
-    IntVariables[0]++;
-}
---------------------------------------------
-for(int i = 0; i < n; i++){
-    IntVariables[i]++;
-}
---------------------------------------------
-for(int i = n; i >= 0; i--){
-    IntVariables[i]++;
-}
- */
