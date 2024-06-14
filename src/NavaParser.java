@@ -49,3 +49,24 @@ public class NavaParser {
         }
     }
 }
+/*
+So two versions:
+--------------------------------------------
+RPT(n);
+INC(0); adds 1 to address [0] n times
+--------------------------------------------
+RPT(n,INC,i);
+INC(i); adds 1 to addresses [0], [1], [2], ..., [n]
+--------------------------------------------
+for(int i = 0; i < n; i++){
+    IntVariables[0]++;
+}
+--------------------------------------------
+for(int i = 0; i < n; i++){
+    IntVariables[i]++;
+}
+--------------------------------------------
+for(int i = n; i >= 0; i--){
+    IntVariables[i]++;
+}
+ */
