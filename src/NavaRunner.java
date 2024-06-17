@@ -35,6 +35,8 @@ public class NavaRunner
             td = SIF(td);
         } else if(commandToken.equals("FUN")){
             td = FUN(td);
+        } else if(commandToken.equals("RPT")){
+            td = RPT(td);
         } else {
             try{
                 throw new Exception("Line: " + NavaCompiler.lineNumber +
@@ -140,6 +142,186 @@ public class NavaRunner
         }
         return td;
     }
+
+    public static TokenData RPT(TokenData td){
+        try{
+            String line = NavaCompiler.getBR().readLine();
+            TokenData td2 = NavaParser.checkLine(line);
+            if(td.getCommandValue2().equals("INC")){
+                for(int i = 0; i <= td.getCommandValue(); i++){
+                    if(td2.hasIndex()){
+                        runAsIndexed(td2, i);
+                    } else {
+                        run(td2);
+                    }
+                }
+            } else if(td.getCommandValue2().equals("DEC")){
+                for(int i = td.getCommandValue(); i >= 0; i--){
+                    if(td2.hasIndex()){
+                        runAsIndexed(td2, i);
+                    } else {
+                        run(td2);
+                    }
+                }
+            }
+        } catch(Exception e){e.printStackTrace();}
+        return td;
+    }
+
+    public static void runAsIndexed(TokenData td, int index){
+        String commandToken = td.getCommandToken();
+        int commandAddress = td.getCommandAddress();
+        int commandValue1 = td.getCommandValue();
+        int commandOutputAddress = td.getCommandOutputAddress();
+
+        if(td.getIndexPosition(0)){
+            commandAddress = index;
+        }
+        if(td.getIndexPosition(1)){
+            commandValue1 = index;
+        }
+        if(td.getIndexPosition(2)){
+            commandOutputAddress = index;
+        }
+
+        if(commandToken.equals("DEC")){
+            IntVariables[commandAddress]--;
+            if(IntVariables[commandAddress] < 0){IntVariables[commandAddress] = 0;}
+        } else if(commandToken.equals("INC")){
+            IntVariables[commandAddress]++;
+        } else if(commandToken.equals("MOV")){
+            IntVariables[commandValue1] = IntVariables[commandAddress];
+            IntVariables[commandAddress] = 0;
+        } else if(commandToken.equals("SET")){
+            IntVariables[commandAddress] = commandValue1;
+        } else if(commandToken.equals("OUT")){
+            if(td.isString()){System.out.print("\n" + td.getCommandValue2());}
+            else {System.out.print("\n" + IntVariables[commandAddress]);}
+        } else if(commandToken.equals("ADD")){
+            IntVariables[commandOutputAddress] = IntVariables[commandAddress] + IntVariables[commandValue1];
+        } else if(commandToken.equals("SUB")){
+            td = SUBasIndexed(td, index);
+        } else if(commandToken.equals("MUL")){
+            IntVariables[commandOutputAddress] = IntVariables[commandAddress] * IntVariables[commandValue1];
+        } else if(commandToken.equals("DIV")){
+            IntVariables[commandOutputAddress] = IntVariables[commandAddress] / IntVariables[commandValue1];
+        } else if(commandToken.equals("SIF")){
+            td = SIFasIndexed(td, index);
+        } else if(commandToken.equals("FUN")){
+            td = FUN(td);
+        } else if(commandToken.equals("RPT")){
+            td = RPT(td);
+        } else {
+            try{
+                throw new Exception("Line: " + NavaCompiler.lineNumber +
+                                            ", Program Started On Line: " + NavaCompiler.programStartLine + " has an incorrect or unknown command.\n" +
+                                            "Error type: " + NavaCompiler.getErrorTypes()[0]);
+            }catch(Exception e){e.printStackTrace();}
+        }
+    }
+
+    public static TokenData SUBasIndexed(TokenData td, int index)
+    {
+        int commandAddress = td.getCommandAddress();
+        int commandValue1 = td.getCommandValue();
+        int commandOutputAddress = td.getCommandOutputAddress();
+        if(td.getIndexPosition(0)){
+            commandAddress = index;
+        }
+        if(td.getIndexPosition(1)){
+            commandValue1 = index;
+        }
+        if(td.getIndexPosition(2)){
+            commandOutputAddress = index;
+        }
+        IntVariables[commandOutputAddress] = IntVariables[commandAddress] - IntVariables[commandValue1];
+        if(IntVariables[commandOutputAddress] < 0){
+            td.setError(1);
+            try{
+                throw new Exception("Line: " + NavaCompiler.lineNumber +
+                                    ", Program Started On Line: " + NavaCompiler.programStartLine + " has an incorrect or unknown command!\n" + 
+                                    "Error type: " + NavaCompiler.getErrorTypes()[1]);
+            }catch(Exception e) {e.printStackTrace();}
+        }
+        return td;
+    }
+    
+    public static TokenData SIFasIndexed(TokenData td, int index)
+    {
+        int commandAddress = td.getCommandAddress();
+        int commandValue1 = td.getCommandValue();
+        String commandValue2 = td.getCommandValue2();
+        
+        if(td.getIndexPosition(0)){
+            commandAddress = index;
+        }
+        if(td.getIndexPosition(1)){
+            commandValue1 = index;
+        }
+
+        if ("NEQL".equals(commandValue2)) {
+            if(IntVariables[commandAddress] != commandValue1){
+                try{
+                    String line = NavaCompiler.getBR().readLine();
+                    run(NavaParser.checkLine(line)); // run line
+                }catch(Exception e){e.printStackTrace();}
+            } else {
+                try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
+            }
+        } else if ("GRTEQL".equals(commandValue2)) {
+            if(IntVariables[commandAddress] >= commandValue1){
+                try{
+                    String line = NavaCompiler.getBR().readLine();
+                    run(NavaParser.checkLine(line));
+                }catch(Exception e){e.printStackTrace();}
+            } else {
+                try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
+            }
+        } else if ("LESEQL".equals(commandValue2)) {
+            if(IntVariables[commandAddress] <= commandValue1){
+                try{
+                    String line = NavaCompiler.getBR().readLine();
+                    run(NavaParser.checkLine(line));
+                }catch(Exception e){e.printStackTrace();}
+            } else {
+                try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
+            }
+        } else if ("EQL".equals(commandValue2)) {
+            if(IntVariables[commandAddress] == commandValue1){
+                try{
+                    String line = NavaCompiler.getBR().readLine();
+                    run(NavaParser.checkLine(line));
+                }catch(Exception e){e.printStackTrace();}
+            } else {
+                try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
+            }
+        } else if ("GRT".equals(commandValue2)) {
+            if(IntVariables[commandAddress] > commandValue1){
+                try{
+                    String line = NavaCompiler.getBR().readLine();
+                    run(NavaParser.checkLine(line));
+                }catch(Exception e){e.printStackTrace();}
+            } else {
+                try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
+            }
+        } else if ("LES".equals(commandValue2)) {
+            if(IntVariables[commandAddress] < commandValue1){
+                try{
+                    String line = NavaCompiler.getBR().readLine();
+                    run(NavaParser.checkLine(line));
+                }catch(Exception e){e.printStackTrace();}
+            } else {
+                try{NavaCompiler.getBR().readLine();}catch(Exception e){e.printStackTrace();} // skip line
+            }
+        } else {
+            try{
+                throw new Exception("Line: " + NavaCompiler.lineNumber +
+                                    ", Program Started On Line: " + NavaCompiler.programStartLine + " has an incorrect or unknown comparison.\n" +
+                                    "Error type: " + NavaCompiler.getErrorTypes()[3]);
+            }catch(Exception e){e.printStackTrace();}
+        }
+        return td;
+    }
 }
 /*
 So two versions:
@@ -161,4 +343,23 @@ for(int i = 0; i <= n; i++){
 for(int i = n; i >= 0; i--){
     IntVariables[i]++;
 }
+--------------------------------------------
+if(td.getCommandValue2().equals("INC")){
+    for(int i = 0; i <= td.getCommandValue(); i++){
+        if(td2.hasIndex()){
+            runAsIndexed(td2, index);
+        } else {
+            run(td2);
+        }
+    }
+} else if(td.getCommandValue2().equals("DEC")){
+    for(int i = td.getCommandValue(); i >= 0; i--){
+        if(td2.hasIndex()){
+            runAsIndexed(td2, index);
+        } else {
+            run(td2);
+        }
+    }
+}
+--------------------------------------------
  */

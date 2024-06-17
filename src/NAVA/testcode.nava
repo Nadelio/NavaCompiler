@@ -8,6 +8,11 @@ DECREASE[
 OUT(DECREASE);
 ]
 
+RPTBODY[
+INC(9);
+OUT(9);
+]
+
 >
 INC(1);
 OUT(0);
@@ -19,4 +24,9 @@ OUT(2);
 FUN(DECREASE);
 FUN(INCREASE);
 OUT(1);
+RPT(5,INC);
+INC(i); this works, but you can't also output i at every iteration
+RPT(1,INC);
+ADD(0,i,9);
+OUT(9);
 <

@@ -10,8 +10,12 @@ public class TokenData
     private int commandOutputAddress;
     private boolean isString;
     private boolean hasIndex = false;
+    private boolean[] indexPositions = {false, false, false};
+    private String originLine;
     
-    public TokenData(String token, int address, int value){
+    public TokenData(String originLine, String token, int address, int value)
+    {
+        this.originLine = originLine;
         this.commandToken = token;
         this.commandAddress = address;
         this.commandValue = value;
@@ -27,6 +31,9 @@ public class TokenData
     public int getCommandOutputAddress(){return this.commandOutputAddress;}
     public boolean isString(){return this.isString;}
     public boolean hasIndex(){return this.hasIndex;}
+    public boolean[] getAllIndexPositions(){return indexPositions;}
+    public boolean getIndexPosition(int position){return indexPositions[position];}
+    public String getOriginLine(){return this.originLine;}
 
     public void setCommandAddress(int newCA){this.commandAddress = newCA;}
     public void setCommandValue(int newCV){this.commandValue = newCV;}
@@ -34,6 +41,7 @@ public class TokenData
     public void setCommandOutputAddress(int newCOA){this.commandOutputAddress = newCOA;}
     public void setError(int errorType){this.errorType = errorType; this.error = true;}
     public void setIndex(boolean newIndex){this.hasIndex = newIndex;}
+    public void setIndexPosition(int position){indexPositions[position] = true;}
 
     public String toString(){
         return "Command Token: " + this.commandToken + "\nCommand Address: " + this.commandAddress + "\nCommand Value: " + this.commandValue + "\nCommand Value 2: " + this.commandValue2 + "\nCommand Output Address: " + this.commandOutputAddress + "\nError: " + this.error + "\nError Type: " + this.errorType;
