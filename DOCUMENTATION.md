@@ -19,6 +19,7 @@ The documentation for Nava is incredibly simple:\
     - `LES` -> `<`
     - `GRTEQL` -> `>=`
     - `LESEQL` -> `<=`
+- `FUN` calls a function, function names are case sensitive when you call them
 - `RPT` repeats the next line the number of times that is in the parentheses
     - `RPT(n)` will repeat the next line `n` times
 
@@ -54,3 +55,37 @@ OUT(Hello World);
 <
 ```
 Super simple, super easy, I can argue even easier than Python! (Just kidding)
+
+#
+Here is how to write a function then call it in Nava:
+```
+SIZE=1;
+
+sayHello[
+OUT(Hello World!);
+]
+
+>
+FUN(sayHello);
+<
+```
+Nava supports recursion and calling functions inside of functions.
+One use for functions is to get around the one line limit for `SIF` and `RPT` commands:
+```
+SIZE=1;
+
+SIFBODY[
+OUT(THEY ARE EQUAL);
+INC(0);
+]
+
+RPTBODY[
+SIF(0,EQL,0);
+FUN(SIFBODY);
+]
+
+>
+RPT(1);
+FUN(RPTBODY);
+<
+```
