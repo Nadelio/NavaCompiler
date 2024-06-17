@@ -14,8 +14,7 @@
 5. Watch your program run!
 
 ### Purpose:
-This project was just to do the absolute simpliest compiler I could do, so I made an assembly mimic, it only has 10 commands (11 if you count `SIZE=`).
-I plan on adding more in the future, such as `RPT` and `FUN` to add more functionality to the language and make `SIF` statements more useful.
+This project was just to do the absolute simpliest compiler I could do, so I made an assembly mimic, it only has 12 commands (13 if you count `SIZE=`).
 I probably won't make error highlighting, mainly because I don't know how, but I'll research it and see what I can do. 
 This was a really fun project, and I'm glad I finally got one of my languages that I am working on complete!
 I hope whoever chooses to use this language enjoys messing around with it.

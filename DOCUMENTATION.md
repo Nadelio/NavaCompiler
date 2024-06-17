@@ -1,7 +1,7 @@
 # Documentation:
 
 The documentation for Nava is incredibly simple:\
-    You have 10 commands, `INC`, `DEC`, `MOV`, `SET`, `OUT`, `ADD`, `SUB`, `MUL`, `DIV`, and `SIF`.
+    You have 10 commands, `INC`, `DEC`, `MOV`, `SET`, `OUT`, `ADD`, `SUB`, `MUL`, `DIV`, `SIF`, and `RPT`.
 - `INC` increases the address given in the parenthesis by 1
 - `DEC` decreases the address given in the parenthesis by 1
 - `MOV` moves the value of the first address to the second address, and sets the first address to `0`
@@ -19,6 +19,8 @@ The documentation for Nava is incredibly simple:\
     - `LES` -> `<`
     - `GRTEQL` -> `>=`
     - `LESEQL` -> `<=`
+- `RPT` repeats the next line the number of times that is in the parentheses
+    - `RPT(n)` will repeat the next line `n` times
 
 The basic structure of commands looks like:\
 `cmd`(`value`,`value2`,`value3`);\
@@ -34,13 +36,15 @@ Your `.nava` file also has a basic structure, it looks like this:\
 ```
 *The line numbers are not included in the code, that is for documentation purposes only.* \
 `SIZE=` should always be the start of your program, following it will be the number of variables you will use in your program, in the example above, I chose only 1 variable\
-Following the *variable number declaration*, or `VNB` for short, will be your program body, denoted by a `>`. That symbol tells the compiler that you have started your program body.\
+Following the *variable number declaration*, or `VND` for short, will be your program body, denoted by a `>`. That symbol tells the compiler that you have started your program body.\
 Following that declaration, can be any number of commands, as long as your hardware can handle it.\
 When you want to signal the end to the program you will write a `<`.\
 This tells the compiler that you are ending your program body, and anything that follows it needs to be whitespace or it will throw an error.\
 Comments have to come after a `;` and can only be in the program body.\
 Doubles, Floats, Arrays, Loops, and certain features of Assembly are not supported yet inside of Nava.\
-All command lines have to end in a `;`, similarly to `Java`. The only exceptions are `>` and `<` lines.
+All command lines have to end in a `;`, similarly to `Java`. The only exceptions are `>`, `<`, `name[` and `]` lines.\
+Functions have to be defined before the main body of the program and after the `VND`.
+
 # 
 Here is a "Hello World" script in Nava:
 ```

@@ -1,32 +1,13 @@
 SIZE=10;
 
-INCREASE[
-OUT(INCREASE);
-]
-
-DECREASE[
-OUT(DECREASE);
-]
 
 RPTBODY[
 INC(9);
-OUT(9);
+ADD(1,9,1);
+OUT(1);
 ]
 
 >
-INC(1);
-OUT(0);
-OUT(1);
-SIF(0,NEQL,1);
-OUT(THEY ARE NOT EQUAL!);
-ADD(0,1,2);
-OUT(2);
-FUN(DECREASE);
-FUN(INCREASE);
-OUT(1);
-RPT(5,INC);
-INC(i); this works, but you can't also output i at every iteration
-RPT(1,INC);
-ADD(0,i,9);
-OUT(9);
+RPT(5);
+FUN(RPTBODY);
 <
