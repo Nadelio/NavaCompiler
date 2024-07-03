@@ -37,6 +37,8 @@ public class NavaRunner
             td = FUN(td);
         } else if(commandToken.equals("RPT")){
             td = RPT(td);
+        } else if(commandToken.equals("DLY")){
+            try{Thread.sleep(commandAddress * 1000);}catch(Exception e){e.printStackTrace();}
         } else {
             try{
                 throw new Exception("Line: " + NavaCompiler.lineNumber +

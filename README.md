@@ -14,7 +14,7 @@
 5. Watch your program run!
 
 ### Purpose:
-This project was just to do the absolute simpliest compiler I could do, so I made an assembly mimic, it only has 12 commands (13 if you count `SIZE=`).
+This project was just to do the absolute simpliest compiler I could do, so I made an assembly mimic, it only has 13 commands (14 if you count `SIZE=`).
 I probably won't make error highlighting, mainly because I don't know how, but I'll research it and see what I can do. 
 This was a really fun project, and I'm glad I finally got one of my languages that I am working on complete!
 I hope whoever chooses to use this language enjoys messing around with it.

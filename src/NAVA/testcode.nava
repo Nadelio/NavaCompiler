@@ -8,6 +8,7 @@ OUT(1);
 ]
 
 >
-RPT(5);
-FUN(RPTBODY);
+OUT(START PROGRAM);
+DLY(1);
+OUT(DELAY WORKS);
 <

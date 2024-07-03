@@ -22,6 +22,8 @@ The documentation for Nava is incredibly simple:\
 - `FUN` calls a function, function names are case sensitive when you call them
 - `RPT` repeats the next line the number of times that is in the parentheses
     - `RPT(n)` will repeat the next line `n` times
+- `DLY` delays the program for `n` seconds
+    - `DLY(n)`
 
 The basic structure of commands looks like:\
 `cmd`(`value`,`value2`,`value3`);\
