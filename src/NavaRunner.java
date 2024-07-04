@@ -2,7 +2,7 @@ package src;
 
 public class NavaRunner
 {
-    public static int[] IntVariables = NavaCompiler.compilerIntVariables;
+    public static int[] IntVariables = NavaRuntime.compilerIntVariables;
 
     public static void run(TokenData td){
         String commandToken = td.getCommandToken();
@@ -159,9 +159,9 @@ public class NavaRunner
     }
 
     public static void updateHooks(){
-        if(NavaCompiler.getHookRegister().isEmpty() || NavaCompiler.getValidHooks() == null){return;}
-        for(String hook : NavaCompiler.getValidHooks()){
-            NavaCompiler.getHookRegister().get(hook).process();
+        if(NavaRuntime.getHookRegister().isEmpty() || NavaRuntime.getValidHooks() == null){return;}
+        for(String hook : NavaRuntime.getValidHooks()){
+            NavaRuntime.getHookRegister().get(hook).process();
         }
     }
 }

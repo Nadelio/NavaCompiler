@@ -47,7 +47,9 @@ Comments have to come after a `;` and can only be in the program body.\
 Doubles, Floats, Arrays, Loops, and certain features of Assembly are not supported yet inside of Nava.\
 All command lines have to end in a `;`, similarly to `Java`. The only exceptions are `>`, `<`, `name[` and `]` lines.\
 Functions have to be defined before the main body of the program and after the `VND`.\
+Nava supports recursion and calling functions inside of functions.\
 You can also use *Extensions*, which are, as the name suggests, extensions of the Nava language\
+To add an Extension to your project, create a folder called "Extensions" and add the `.jar` file for the extension you want in there.\
 Extensions work by being declared after your `VND`. To declare them, you use this syntax:\
 `HOOK=`, then your extension name as it is declared in the extension, make sure if you are using an extension, that the extension properly instantiates its class.\
 To use multiple extensions, seperate them with a `,`.\
@@ -77,7 +79,6 @@ OUT(Hello World!);
 FUN(sayHello);
 <
 ```
-Nava supports recursion and calling functions inside of functions.
 One use for functions is to get around the one line limit for `SIF` and `RPT` commands:
 ```
 SIZE=1;

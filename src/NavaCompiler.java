@@ -1,22 +1,16 @@
 package src;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-
-import src.Extensions.TestExtension;
-import src.Extensions.WindowExtension;
-
 import java.util.Arrays;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 public class NavaCompiler{
     private static final String compilerVersion = "2.0.0";
-
-    // hook data
-    private static final HashMap<String, Boolean> hookLibrary = new HashMap<String, Boolean>();
-    private static HashMap<String, NavaHook> hookRegister = new HashMap<String, NavaHook>();
-    private static String[] validHooks;
 
     // command data
     public static final String[] cmds = {"DEC", "INC", "MOV", "SET", "OUT", "ADD", "SUB", "MUL", "DIV", "SIF", "FUN", "RPT", "DLY"};
@@ -34,7 +28,6 @@ public class NavaCompiler{
     public static int lineNumber;
 
     // program data
-    public static int[] compilerIntVariables;
     public static HashMap<String, NavaFunction> functions = new HashMap<String, NavaFunction>();
 
     public static void compile(){
@@ -51,7 +44,7 @@ public class NavaCompiler{
                 if(compilerVariablesSize <= 0){
                     throw new Exception("Line: " + 0 + ", Program Started On Line: N/A has incorrect syntax!\n" + "Error type: " + errorTypes[1]);
                 }
-                compilerIntVariables = new int[compilerVariablesSize];
+                NavaRuntime.compilerIntVariables = new int[compilerVariablesSize];
             }
 
             line = reader.readLine();
@@ -65,17 +58,17 @@ public class NavaCompiler{
                         hooks = line.substring(5, line.indexOf(';')).split(",");
                     }
 
-                    validHooks = new String[0];
+                    NavaRuntime.setValidHooks(new String[0]);
                     for(String hook : hooks){
-                        if(hookLibrary.containsKey(hook)){
-                            hookLibrary.put(hook, true);
-                            validHooks = ArrayUtils.add(validHooks, hook);
+                        if(NavaRuntime.getHookLibrary().containsKey(hook)){
+                            NavaRuntime.getHookLibrary().put(hook, true);
+                            NavaRuntime.setValidHooks(ArrayUtils.add(NavaRuntime.getValidHooks(), hook));
                         } else {
-                            throw new Exception("Line: " + lineNumber + ", Program Started On Line: N/A has an unknown hook!\n" + "Error type: " + errorTypes[4]);
+                            throw new Exception("Line: " + lineNumber + ", Program Started On Line: N/A has an unknown hook: " + hook + "\n" + "Error type: " + errorTypes[4]);
                         }
                     }
 
-                    for(String hook : validHooks){
+                    for(String hook : NavaRuntime.getValidHooks()){
                         hookConflictCheck(hook);
                     }
                 } else {
@@ -106,7 +99,7 @@ public class NavaCompiler{
                             TokenData td = NavaParser.checkLine(line);
                             commands = ArrayUtils.add(commands, td);
                         }
-                    } else if(!line.equals("")){
+                } else if(!line.equals("")){
                         if(line.equals(">")){break;}
                         throw new Exception("Line: " + lineNumber + ", Program Started On Line: N/A" + " has an incomplete function declaration statement.\n" + "Error type: " + errorTypes[2]);
                     }
@@ -142,10 +135,21 @@ public class NavaCompiler{
     }
 
     public static void main(String[] args){
+        System.out.println("Using Nava Compiler Version: " + compilerVersion);
+
+        // load debug mode
         if(args.length == 0){args = new String[]{"false"};}
         Debugger.setDebugMode(args[0]);
-        System.out.println("Using Nava Compiler Version: " + compilerVersion);
-        initHookLibrary();
+
+        // load extensions
+        String extensionFolderPath;
+        if(Debugger.getDebugMode()){
+            extensionFolderPath = "src/Extensions/";
+            Debugger.log("Loaded Debug mode");
+        } else{extensionFolderPath = "./Extensions/";}
+        loadExtensions(extensionFolderPath);
+
+        // run Nava files
         String pathname;
         if(Debugger.getDebugMode()){pathname = "src/NAVA/";} else {pathname = "./NAVA/";}
         File folder = new File(pathname);
@@ -161,17 +165,38 @@ public class NavaCompiler{
         } catch(IOException e){}
     }
 
-    private static void initHookLibrary(){
-        new WindowExtension();
-        new TestExtension();
-        Debugger.log("HOOK LIBARY INITIALIZED");
-    }
-
     private static void hookConflictCheck(String hook) throws Exception{
-        String[] incompatibleHooks = hookRegister.get(hook).getIncompatibleExtensions();
-        for(String validHook : validHooks){
+        String[] incompatibleHooks = NavaRuntime.getHookRegister().get(hook).getIncompatibleExtensions();
+        for(String validHook : NavaRuntime.getValidHooks()){
             if(Arrays.asList(incompatibleHooks).contains(validHook)){
                 throw new Exception("Incompatible Hook: \"" + hook + "\" with Hook: \"" + validHook + "\"\nError type: " + errorTypes[5]);
+            }
+        }
+    }
+
+    private static void loadExtensions(String folderPath){
+        Debugger.log("Loading Extensions");
+        File folder = new File(folderPath);
+        File[] jarFiles = folder.listFiles(new FileFilter() {
+            public boolean accept(File file){return file.isFile() && file.getName().endsWith(".jar");}
+        });
+
+        for(File file : jarFiles){
+            try{
+                URL jarURL = file.toURI().toURL();
+                URLClassLoader classLoader = new URLClassLoader(new URL[]{jarURL});
+                String className = file.getName().substring(0, file.getName().length() - 4);
+                Class<?> loadedClass = Class.forName(className, true, classLoader);
+                if (NavaHook.class.isAssignableFrom(loadedClass)) {
+                    NavaHook instance = (NavaHook) loadedClass.getDeclaredConstructor().newInstance();
+                    instance.setupExtension();
+                    Debugger.log("Loaded Extension: " + className);
+                } else {
+                    Debugger.log(className + " is not a NavaHook extension");
+                }
+                classLoader.close();
+            } catch(Exception e){
+                e.printStackTrace();
             }
         }
     }
@@ -179,11 +204,7 @@ public class NavaCompiler{
     public static BufferedReader getBR(){return reader;}
     public static FileReader getFR(){return fr;}
     public static String[] getErrorTypes(){return errorTypes;}
-    public static String[] getValidHooks(){return validHooks;}
-    public static HashMap<String, NavaHook> getHookRegister(){return hookRegister;}
 
     public static void setFR(FileReader fileReader){fr = fileReader;}
     public static void setBR(BufferedReader bufferedReader){reader = bufferedReader;}
-    public static void addToHookRegister(NavaHook hook){hookRegister.put(hook.getHookName(), hook);}
-    public static void addToHookLibrary(String hook){hookLibrary.put(hook, false);}
 }
