@@ -10,7 +10,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 public class NavaCompiler{
-    private static final String compilerVersion = "2.0.0";
+    private static final String compilerVersion = "2.0.1";
 
     // command data
     public static final String[] cmds = {"DEC", "INC", "MOV", "SET", "OUT", "ADD", "SUB", "MUL", "DIV", "SIF", "FUN", "RPT", "DLY"};
