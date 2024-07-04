@@ -46,6 +46,8 @@ public class NavaRunner
                                             "Error type: " + NavaCompiler.getErrorTypes()[0]);
             }catch(Exception e){e.printStackTrace();}
         }
+
+        updateHooks();
     }
 
     public static TokenData SUB(TokenData td)
@@ -154,5 +156,12 @@ public class NavaRunner
             }
         } catch(Exception e){e.printStackTrace();}
         return td;
+    }
+
+    public static void updateHooks(){
+        if(NavaCompiler.getHookRegister().isEmpty() || NavaCompiler.getValidHooks() == null){return;}
+        for(String hook : NavaCompiler.getValidHooks()){
+            NavaCompiler.getHookRegister().get(hook).process();
+        }
     }
 }

@@ -46,7 +46,13 @@ This tells the compiler that you are ending your program body, and anything that
 Comments have to come after a `;` and can only be in the program body.\
 Doubles, Floats, Arrays, Loops, and certain features of Assembly are not supported yet inside of Nava.\
 All command lines have to end in a `;`, similarly to `Java`. The only exceptions are `>`, `<`, `name[` and `]` lines.\
-Functions have to be defined before the main body of the program and after the `VND`.
+Functions have to be defined before the main body of the program and after the `VND`.\
+You can also use *Extensions*, which are, as the name suggests, extensions of the Nava language\
+Extensions work by being declared after your `VND`. To declare them, you use this syntax:\
+`HOOK=`, then your extension name as it is declared in the extension, make sure if you are using an extension, that the extension properly instantiates its class.\
+To use multiple extensions, seperate them with a `,`.\
+Make sure to end the *dependent extension declaration* (`DED` for short) with a `;` so as to avoid a syntax error.\
+For more information on *creating an extension*, please read the `EXTENSIONS.md` file.
 
 # 
 Here is a "Hello World" script in Nava:
