@@ -7,10 +7,12 @@ The basic template extension looks like this:
 public class TemplateExtension extends NavaHook {
     private static String hookName;
     private static String[] incompatibleExtensions;
+    private static int[] usedPorts;
 
     public void setupExtension(){
         hookName = "TemplateExtension"; // change this to your class name
         incompatibleExtensions = new String[]{}; // change the array to hold the extensions that would conflict with yours
+        usedPorts = new int[]{}; // change this array to hold all the variable numbers that your program checks
         NavaRuntime.addToHookRegister(this);
         NavaRuntime.addToHookLibrary(hookName);
     }
@@ -22,6 +24,7 @@ public class TemplateExtension extends NavaHook {
 
     public String getHookName(){return hookName;}
     public String[] getIncompatibleExtensions(){return incompatibleExtensions;}
+    public int[] getUsedPorts(){return usedPorts;}
 }
 ```
 In the `incompatibleExtensions` array, you will add the names of the extensions that have conflicting variable array indices.\
