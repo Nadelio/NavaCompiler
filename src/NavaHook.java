@@ -6,4 +6,5 @@ public abstract class NavaHook{
 
     public abstract String getHookName();
     public abstract String[] getIncompatibleExtensions();
+    public abstract int[] getUsedPorts();
 }

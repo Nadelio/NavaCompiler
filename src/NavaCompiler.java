@@ -165,11 +165,21 @@ public class NavaCompiler{
         } catch(IOException e){}
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     private static void hookConflictCheck(String hook) throws Exception{
         String[] incompatibleHooks = NavaRuntime.getHookRegister().get(hook).getIncompatibleExtensions();
+        int[] usedPorts = NavaRuntime.getHookRegister().get(hook).getUsedPorts();
         for(String validHook : NavaRuntime.getValidHooks()){
             if(Arrays.asList(incompatibleHooks).contains(validHook)){
                 throw new Exception("Incompatible Hook: \"" + hook + "\" with Hook: \"" + validHook + "\"\nError type: " + errorTypes[5]);
+            }
+        }
+
+        for(NavaHook nHook : NavaRuntime.getHookRegister().values()){
+            for(int port : usedPorts){
+                if(Arrays.asList(nHook.getUsedPorts()).contains(port) && !nHook.getHookName().equals(hook)){
+                    throw new Exception("Incompatible Hook: \"" + hook + "\" with Hook: \"" + nHook.getHookName() + "\"\nError type: " + errorTypes[5]);
+                }
             }
         }
     }
